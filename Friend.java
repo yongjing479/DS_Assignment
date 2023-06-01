@@ -56,36 +56,6 @@ public class Friend<T extends Comparable<User>> {
     }
 
     /**
-     *     find the index of the vertex
-     * @param v
-     * @return the index of the account id
-     */
-    public int getIndex(User v){
-        Vertex<T> temp = head;
-        int pos = 0;
-        while(temp != null){
-            if(temp.vertexInfo.compareTo(v) == 0) return pos;
-            temp = temp.nextVertex;
-            pos ++;
-        }
-        return -1;
-    }
-
-    /**
-     * get vertex info at a specific index position
-     * @param pos
-     * @return the user account
-     */
-    public User getVertex(int pos){
-        if(pos> size -1 || pos<0) return null;
-        Vertex<T> temp = head;
-        for (int i = 0; i < pos; i++) {
-            temp = temp.nextVertex;
-        }
-        return (User)temp.vertexInfo;
-    }
-
-    /**
      * //Add new relationship between two user as friends
      * @param source
      * @param destination
