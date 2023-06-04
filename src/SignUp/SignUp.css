@@ -91,13 +91,24 @@ form{
     
     
 }
+.Input{
+    margin-bottom:10px;
+}
 
 .Input.password{
     padding-bottom: 2px;
 }
 
-.create a: hover{
-    color:black;
+.create-button:hover {
+    color: black;
+  }
 
-}
+ .label{
+    font-size:15px;
+    margin-top:15px;
+ } 
+
+ 
+  
+  
     
