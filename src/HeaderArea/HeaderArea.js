@@ -49,7 +49,7 @@ function HeaderArea(){
                     </div>
                     <div className="plus">
                         <img src="./images/dp1.png"/>
-                    </div>*/}
+    </div>*/}
                     </div>
                 </div>
             </div> 

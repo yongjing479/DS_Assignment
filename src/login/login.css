@@ -106,6 +106,7 @@ input::placeholder{
     width: 60%;
     font-weight: bold;
     margin-left: 20%;
+
 }
 
 .page a{
@@ -143,4 +144,15 @@ input::placeholder{
 
 .btns b:hover{
     color: black;
+}
+
+.SignInTitle{
+    font-size: 25px;
+    font-weight: 500;
+    padding-top: 0.3rem;
+    color: black;
+    justify-content: center;
+    align-items: center;
+    margin-left: 18px;
+    margin-right: 0 auto;
 }

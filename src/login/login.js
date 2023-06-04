@@ -1,12 +1,19 @@
  import React from 'react';
- import './LoginPage.css';
+ import './login.css';
  import {Link} from 'react-router-dom';
 import Popup from '../SignUp/SignUp';
-import {useState} from 'react';
+import {useState } from 'react';
 
 
  function LoginPage(){
     const [buttonPopup, setButtonPopup] = useState(false);
+    
+
+    // setTimeout(() => {
+    //     setTimedPopup(true);
+    // }, 3000);
+    
+
     return(
     <div className = "Login">
         <div className ="facebook">
@@ -36,12 +43,20 @@ import {useState} from 'react';
             
             <div className = "create">
                 <br></br>
-                <button className = "btns" onClick={() => setButtonPopup(true)}>
+                {/* <button className = "btns" onClick={() => setButtonPopup(true)}>
                     Create New Account
-                </button>
-                <Popup trigger = {buttonPopup}>
-                    <h3>My poopup</h3>
+                </button> */}
+                <Popup trigger = {buttonPopup} setTrigger={setButtonPopup}>
+                    <div className="SignInTitle">
+                    <h3>Sign In</h3>
+                    </div>
+                    
                 </Popup>
+
+                {/* <Popup trigger = {timedPopup} setTrigger={setTimedPopup}>
+                    <h3>Time to popup</h3>
+                    <p>this is my timetriggered popup</p>
+                </Popup> */}
             </div>
             <p></p>
             <br></br>

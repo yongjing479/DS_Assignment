@@ -1,16 +1,19 @@
-
 import React from 'react';
 import './SignUp.css';
+import SignUpModal from './SignUpModal';
+// import Popup from '../SignUp/SignUpModal';
 
-function Popup(props){
-    return(props.trigger)? (
-        <div className="popup">
-            <div className="popup-inner">
-                <button className = "signin-btn">Sign In</button>
-                {props.children}
-            </div>
-        </div>
-    ) : "";
+function SignUp() {
+  // const [trigger, setTrigger] = useState(false);
+  return (
+    <div>
+      <SignUpModal />
+      {/* <button className="signin-btn" onClick={() => setTrigger(true)}>
+        
+      </button> */}
+      {/* <Popup trigger={trigger} setTrigger={setTrigger} /> */}
+    </div>
+  );
 }
 
-export default Popup
+export default SignUp;

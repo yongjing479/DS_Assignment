@@ -1,0 +1,15 @@
+.input{
+    padding : 15px;
+    margin :10px 0px;
+    width:100%;
+    box-sizing : border-box;
+    height: 40px;
+}
+
+.container{
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    height:100vh;
+}
