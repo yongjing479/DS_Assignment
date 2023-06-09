@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.ArrayList;
+import java.time.LocalDate;
 
 public class Friend<T extends Comparable<User>> {
 
@@ -27,6 +28,80 @@ public class Friend<T extends Comparable<User>> {
         while(temp != null){
             if(temp.vertexInfo.compareTo(v) == 0) return true;
             temp = temp.nextVertex;
+        }
+        return false;
+    }
+
+    /**
+     * remove the user account
+     * @param username: String
+     * @return true if remove successfull
+     */
+    public boolean removeEdge(String username){
+        boolean result = false;
+        if(size == 0){
+            return false;
+        }
+        else{
+            Vertex<T> temp = head;
+            Vertex<T> previous = null;
+            while(temp != null){
+                if(temp.vertexInfo.getUsername().compareTo(username) == 0){
+                    Vertex<T> current = temp; //the vertex want to remove
+
+                    Vertex<T> friendVertex = current.firstEdge.toVertex;
+                    Edge<T> friendEdge = current.firstEdge;
+                    while(friendEdge != null) {
+                        result =removeRelationship(friendVertex.vertexInfo, current.vertexInfo);
+                        friendEdge = friendEdge.nextEdge;
+                        if(friendEdge != null){
+                            friendVertex = friendEdge.toVertex;
+                        }
+                    }
+                    if (previous != null) {
+                        previous.nextVertex = current.nextVertex; // connect the previous vertex to the next vertex
+                    } else {
+                        head = current.nextVertex; // update the head reference if the first vertex is removed
+                    }
+                    size--;
+                }
+                previous = temp;
+                temp = temp.nextVertex;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * remove the relationship between two user
+     * @ sourceVertex: Vertex, destinationVertex: Vertex
+     * @return true
+     */
+    private boolean removeRelationship(User source, User destination){ //have to check the first before check the following
+        if(head == null) return false;
+        if(!hasVertex(source) || !hasVertex(destination)) return false;
+        Vertex<T> sourceVertex = head;
+        while(sourceVertex != null){
+            if(sourceVertex.vertexInfo.compareTo(source) == 0){
+                Edge<T> beforeEdge = sourceVertex.firstEdge;
+                Edge<T> currentEdge = sourceVertex.firstEdge;
+                while(beforeEdge != null){
+                    if(beforeEdge.toVertex.vertexInfo.compareTo(destination)==0){
+                        if (beforeEdge != currentEdge) {
+                            beforeEdge.nextEdge = currentEdge; // remove the current edge from the list
+                        } else {
+                            sourceVertex.firstEdge = currentEdge.nextEdge; // update the firstEdge reference if the first edge is removed
+                        }
+                        sourceVertex.numOfFriends--;
+                        return true;
+                    }
+                    else{
+                        beforeEdge = currentEdge;
+                        currentEdge = currentEdge.nextEdge;
+                    }
+                }
+            }
+            sourceVertex = sourceVertex.nextVertex;
         }
         return false;
     }
@@ -63,9 +138,9 @@ public class Friend<T extends Comparable<User>> {
      * @return return true when the user add friend succuessfully
      */
 
-    public boolean addEdge(User source, User destination){
+    private boolean addEdge(User source, User destination){
         if(head == null) return false;
-        if(!hasVertex(source) || hasVertex(destination)) return false;
+        if(!hasVertex(source) || !hasVertex(destination)) return false;
         Vertex<T> sourceVertex = head;
         while(sourceVertex != null){
             if(sourceVertex.vertexInfo.compareTo(source) == 0){
@@ -121,6 +196,20 @@ public class Friend<T extends Comparable<User>> {
         }
         return list;
     }
+    public void printEdges(){
+        Vertex<T> temp= head;
+        while(temp != null){
+            System.out.print("# " + temp.vertexInfo.getUsername() + " : ");
+            Edge<T> currentEdge = temp.firstEdge;
+            while(currentEdge != null){
+                System.out.print("[" + temp.vertexInfo.getUsername() + "," + currentEdge.toVertex.vertexInfo.getUsername() +"] ");
+                currentEdge = currentEdge.nextEdge;
+
+            }
+            System.out.println();
+            temp = temp.nextVertex;
+        }
+    }
 }
 
 
@@ -128,7 +217,6 @@ public class Friend<T extends Comparable<User>> {
 class Vertex<T extends Comparable<User>>{
     User vertexInfo; //store User
     int numOfFriends;  //number of friends
-    //int outdeg;
     Vertex<T> nextVertex;
     Edge<T> firstEdge;
 
@@ -145,6 +233,8 @@ class Vertex<T extends Comparable<User>>{
         this.nextVertex = nextVertex;
         this.firstEdge = firstEdge;
     }
+
+
 
 
 }
@@ -168,4 +258,6 @@ class Edge<T extends Comparable<User>>{
         weight = 1;
        nextEdge = toEdge;
     }
+
+   
 }
