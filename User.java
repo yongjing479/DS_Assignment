@@ -15,7 +15,7 @@ import java.util.*;
 import java.time.LocalDate;
 import java.time.Period;
 
-public class User implements Serializable {
+public class User<T> implements Serializable {
     private String username;
     private String password;
 
@@ -25,7 +25,7 @@ public class User implements Serializable {
     private userFriends friends;
     private LocalDate birthday;
     private int id;
-    private Admin admin;
+     Admin admin;
     private byte[] salt;
     private byte[] hash;
 
@@ -289,14 +289,39 @@ public class User implements Serializable {
         else return -1;
     }
 
+    /**
+     * When the user first sign up an account or renew the acount password
+     * @param password
+     * @return
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
+     */
     public byte[] passwordHash(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        SecureRandom random = new SecureRandom();
-        salt = new byte[16];
-        random.nextBytes(salt);
+        if(hash == null){
+            SecureRandom random = new SecureRandom();
+            salt = new byte[16];
+            random.nextBytes(salt);
+        }
         KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
         SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
         hash = factory.generateSecret(spec).getEncoded();
         return hash;
     }
+
+    /**
+     * Everytime user login account
+     * @param password
+     * @return
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
+     */
+    public byte[] verifyPassword(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 128);
+        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        byte[] verifyHash = factory.generateSecret(spec).getEncoded();
+        return verifyHash;
+    }
+
+
 
 }

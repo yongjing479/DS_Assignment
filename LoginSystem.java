@@ -4,6 +4,7 @@ import java.io.*;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.Period;
@@ -36,10 +37,13 @@ public class LoginSystem {
         System.out.print("Enter phone number: ");
         String phone = scanner.nextLine();
 
-
-        System.out.print("Enter birthday(Date/Month/Year eg.21/12/2021): ");
-        String birthday = scanner.nextLine();
-        String[] birthDayArray = birthday.split("/");
+        String[] birthDayArray = new String[3];
+        System.out.println("Day: ");
+        birthDayArray[0] = scanner.nextLine();
+        System.out.println("Month: ");
+        birthDayArray[1] = scanner.nextLine();
+        System.out.println("Year: ");
+        birthDayArray[2] = scanner.nextLine();
 
         LocalDate birthdayDate = LocalDate.of(Integer.valueOf(birthDayArray[2]), Integer.valueOf(birthDayArray[1]), Integer.valueOf(birthDayArray[0]));
         boolean flag = true;
@@ -78,19 +82,19 @@ public class LoginSystem {
         System.out.print("Enter your password: ");
         String password = scanner.nextLine();
         for (User account : login_info) {
-            if (account.getUsername().equals(username) && account.getHash().equals(currentUser.passwordHash(password))) { /** change to password hashing */
+            if (account.getUsername().equals(username) && Arrays.equals(account.getHash(), currentUser.verifyPassword(password))) { /** change to password hashing */
                 System.out.println("Login successful.");
                 loggedIn = true;
                 currentUser = account;
                 currentUserId = account.getId();
                 return true;
-            } else if (account.getEmail().equals(username) && account.getHash().equals(currentUser.passwordHash(password))) {
+            } else if (account.getEmail().equals(username) && Arrays.equals(account.getHash(), currentUser.verifyPassword(password))) {
                 System.out.println("Login successful.");
                 loggedIn = true;
                 currentUser = account;
                 currentUserId = account.getId();
                 return true;
-            } else if (account.getPhoneNumber().equals(username) && account.getHash().equals(currentUser.passwordHash(password))) {
+            } else if (account.getPhoneNumber().equals(username) && Arrays.equals(account.getHash(), currentUser.verifyPassword(password))) {
                 System.out.println("Login successful.");
                 loggedIn = true;
                 currentUser = account;
