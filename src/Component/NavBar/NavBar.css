@@ -1,0 +1,73 @@
+.navbar_main{
+    border-bottom: 1px solid #D8D8DE; /* make a solid line to separate navigation area and the main area */
+}
+.navbar_logo{
+    margin: 5px 5px 5px 6px;
+}
+.navbar_leftbar{
+    display: flex; /* make the logo and search bar in the same align*/
+}
+.navbar_search{ /*for the search bar */
+    height: 40px; 
+    width: 190px;
+    border-radius: 25px; /*change the border of the shape become round */
+    border: 0px; /* the visibility of the line of the shape */
+    background-color: #EFF2F5;
+    font-size: 16px;
+    padding-left : 30px; /*move the word "Search Sircle" to the left */
+    margin-top: 10px; /* move the search bar to bottom */
+}
+
+.navbar_container{
+    display: flex;
+    margin-top: 10px;
+    margin-left: 60px;  /*move all the things in the middle part to the left */
+}
+
+.navbar_tabs{
+    width: 120px;
+    height: 45px;
+    margin-top: 10px;
+}
+
+.navbar_tabs.active{
+    margin-top: 10px;
+    margin-right: 5px;
+    border-bottom: 3px solid #1B77F2;
+}
+
+.navbar_right{
+    display: flex;
+    margin-left: 150px;
+}
+
+.navbar_righttabs{  /*icon at right side */
+    margin-left: 10px;
+    margin-top: 15px;
+    width: 120px;
+    height: 45px;
+}
+
+.navbar_bell{
+    margin-right: 10px;
+}
+
+.navbar_righting{ /*profile picture class */
+    margin-top: 10px;
+    margin-right: 10px;
+    width: 120px;
+    height: 45px;
+    max-width: 45px; /*limit the size of the image */
+
+}
+
+.triangle{
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 6px solid rgb(86, 86, 86);
+    transform: scaleY(-1);
+    margin-left: 40px;
+    margin-top: -10px;
+}

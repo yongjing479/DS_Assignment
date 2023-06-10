@@ -11,7 +11,7 @@ const Gender = () => {
     <Radio.Group onChange={onChange} value={value}>
       <Radio value={1}>Male</Radio>
       <Radio value={2}>Female</Radio>
-      <Radio value={3}>Custom</Radio>
+      <Radio value={3}>Other</Radio>
       
     </Radio.Group>
   );

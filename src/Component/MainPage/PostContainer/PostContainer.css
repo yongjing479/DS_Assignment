@@ -1,0 +1,111 @@
+.post_container{
+    width: 600px;
+    margin-top: 20px;
+    border-radius: 20px;
+
+}
+.post_header{
+    display: flex;
+    height: 60px;
+}
+
+.post_header_img{
+    margin: 15px;
+    margin-top: 10px;
+}
+
+.post_img{
+    max-height: 45px;
+    max-width: 45px; /*limit the size of the image */
+}
+
+.post_header_text{
+    font-weight:  700;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.post_description{
+    display: flex;
+    margin-left: 15px;
+    margin-top: -10px;
+}
+
+.post_image{
+    margin : 10px 0px;
+}
+
+.post_likeCountContainer{
+    display: flex;
+    height: 30px;
+    padding: 0px 10px;
+    border-bottom: 1px solid #CDD0D4;
+}
+
+/* .post_like{
+
+} */
+
+.post_likeimg{
+    height: 20px;
+}
+
+.post_likecount{
+    margin-left: 5px;
+}
+
+.post_likeShare{
+    display: flex;
+    height: 40px;
+    margin-top:10px;
+}
+
+.post_tab{
+    display: flex;
+    width: 90;
+    margin-left: 90px;
+}
+/* 
+.post_tabfirst{
+
+} */
+
+.post_tabimg{
+    width: 30px;
+}
+
+.post_tabtext{
+    margin : 5px;
+}
+
+.post_top{
+    display: flex;
+    margin-top: 20px;
+    padding-bottom: 15px;
+}
+
+.post_commentimg{
+    max-height: 45px;
+    max-width: 45px; /*limit the size of the image */
+    margin-left: 15px;
+}
+
+.post_box{
+    display: flex;
+    height: 40px;
+    width: 460px;
+    border: 0px;
+    background-color: #EFF2F5;
+    border-radius: 30px;
+    font-size: 16px;
+    padding-left: 20px;
+    margin-left: 60px ;
+    margin-bottom: 20px;
+    margin-top: -60px;
+}
+
+.upload_comment{
+    border-top: 1px solid #CDD0D4;
+    border-bottom: 1px solid #CDD0D4;
+}
+

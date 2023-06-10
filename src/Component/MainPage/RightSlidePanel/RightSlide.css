@@ -1,0 +1,72 @@
+.rightside_container{
+    width: 600px;
+}
+
+.rightside_header{
+    margin-top: 20px;
+    display: flex;
+    margin-left: 210px;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.rightside_content{
+    margin-left: 200px;
+}
+
+.right_acceptFriend{
+    display: flex;
+}
+
+/* .right_friend{
+
+} */
+
+.right_friendimg{
+    height: 60px;
+    margin-left: 200px;
+    margin-top: 20px;
+}
+
+.right_info{
+    flex-direction: column;
+    margin-top: 20px;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.name{
+    margin-left: -65px;
+}
+
+.mutual_friend{
+    margin-left: 10px;
+    max-width: 500px;
+    height: 50px;
+}
+
+.right_accpetDecline{
+    display: flex;
+    margin-top: 70px;
+    margin-left: -120px;
+}
+
+.deleteIcon{
+    margin-top: 5px;
+    margin-left: 20px;
+}
+
+.show{
+    padding-left: 30px;
+    margin-top: 45px;
+    color: #527dbe;
+    margin-bottom: 10px;
+    
+}
+
+.line{
+    border-bottom: 1px solid #3a3a40;
+    width: 400px;
+    margin-left: -380px;
+    margin-top: 40px;
+}
