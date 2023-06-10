@@ -3,9 +3,8 @@ package org.example;
 import java.util.ArrayList;
 
 public class Admin {
-//    private ArrayList<User> admin;
     private boolean admins;
-    private String report;
+    private Friend friend ;
 
     public Admin(){}
     public Admin(boolean admins){
@@ -34,20 +33,16 @@ public class Admin {
 
     //to delete any user account
     public boolean deleteAccount(String username){
-        LoginSystem userAccount = new LoginSystem();
         if(!admins) System.out.println("Only admins are allowed to delete the account");
         else{
-            if(userAccount.login_info.size() == 0) {
+            if(friend.size == 0) {
                 System.out.println("There is no account left");
                 return false;
             }
             else{
-                for (int i = 0; i < userAccount.login_info.size(); i++) {
-                    if(userAccount.login_info.get(i).equals(username)){
-                        userAccount.login_info.remove(i);
-                        return true;
-                    }
-                }
+                friend.removeAccount(username);
+                System.out.printf("%s account has been removed sucessfully\n",username);
+                return true;
             }
         }
         return false;
