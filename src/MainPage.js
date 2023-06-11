@@ -1,12 +1,12 @@
 import React from 'react';
-// import NavBar from './Component/NavBar/NavBar';
-// import Layout from './Component/MainPage/Layout';
+import NavBar from './Component/NavBar/NavBar';
+import Layout from './Component/MainPage/Layout';
 
 function MainPage() {
   return (
     <div>
-      {/* <NavBar /> */}
-      {/* <Layout /> */}
+      <NavBar />
+      <Layout />
     </div>
   );
 }
