@@ -124,7 +124,7 @@ public class User<T> implements Serializable {
         System.out.println("Hobbies: " + info.printArraylist(info.getHobbies()));
     }
 
-    public void displayInfo2(User currentUser) {
+    public void displayInfo2(User currentUser, Friend userGraph) {
         System.out.println("Username: " + this.username);
         System.out.println("Name: " + info.getName());
         System.out.println("Id: " + this.id);
@@ -133,9 +133,9 @@ public class User<T> implements Serializable {
         System.out.println("Gender: " + info.getGender());
         System.out.println("Job(s): " + info.printArraylist(info.getJobs()));
         System.out.println("Hobbies: " + info.printArraylist(info.getHobbies()));
-        System.out.println("Mutual friend(s): " + friends.mutualFriends(currentUser).size());
+        System.out.println("Mutual friend(s): " + friends.findMutualFriend(userGraph,currentUser).size());
         System.out.print("List of Mutual Friends: ");
-        for (User user: friends.mutualFriends(currentUser)) {
+        for (User user: friends.findMutualFriend(userGraph,currentUser)) {
             System.out.print(user.getUsername() + " ");
         }
         System.out.println("");
@@ -267,11 +267,11 @@ public class User<T> implements Serializable {
         user.friends.declineFriend(this);
     }
 
-    public void getFriendSuggestion(ArrayList<User> UsersList) {
+    public void getFriendSuggestion(ArrayList<User> UsersList, Friend userGraph) {
         System.out.println("Lists of suggested friends: ");
         int amount = 0;
-        for(User user : friends.suggestedFriends(UsersList, this)) {
-            System.out.println(user.getUsername() + ": " + friends.mutualFriends(user).size());
+        for(User user : friends.suggestedFriends(UsersList, this, userGraph)) {
+            System.out.println(user.getUsername() + ": " + friends.findMutualFriend(userGraph,user).size());
             if (amount == 5) {
                 break;
             }

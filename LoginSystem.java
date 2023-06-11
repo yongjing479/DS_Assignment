@@ -184,8 +184,8 @@ public class LoginSystem {
         }
     }
 
-    public void displaySuggestedFriends() {
-        currentUser.getFriendSuggestion(login_info);
+    public void displaySuggestedFriends(Friend userGraph) {
+        currentUser.getFriendSuggestion(login_info, userGraph);
     }
 
     public ArrayList<User> getLogin_info() {

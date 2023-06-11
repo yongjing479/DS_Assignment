@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Admin {
     private boolean admins;
-    private Friend friend ;
 
     public Admin(){}
     public Admin(boolean admins){
@@ -32,7 +31,7 @@ public class Admin {
     }
 
     //to delete any user account
-    public boolean deleteAccount(String username){
+    public boolean deleteAccount(String username, Friend friend){
         if(!admins) System.out.println("Only admins are allowed to delete the account");
         else{
             if(friend.size == 0) {
