@@ -48,6 +48,15 @@ public class userFriends implements Serializable{
         return false;
     }
 
+    /**
+     * add pending to the user send request
+     * @param user: User
+     * @return true if send successfully
+     */
+    private void setPending(User owner,  User user){
+        owner.getFriends().getPending().add(user);
+    }
+
 
     public void addFriends(User user) {
         pending.add(user);
@@ -155,6 +164,21 @@ public class userFriends implements Serializable{
         }
         mutualFriends = mutualFriend;
         return mutualFriend;
+    }
+
+    /**
+     * Send friend request to the user to add as friend
+     * @para owner: User, other: User, friendGraph: Friend
+     * @return true when send friend request successfully
+     */
+    public boolean sendFriendRequest(User owner, User other, Friend friendGraph){
+        if(friendGraph == null) return false;
+        if(!friendGraph.hasVertex(other)) return false;
+        if(!other.getFriends().getPending().contains(owner)){
+            other.getFriends().setPending(other,owner);
+            return true;
+        }
+        return false;
     }
 
 
