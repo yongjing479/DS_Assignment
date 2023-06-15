@@ -15,9 +15,16 @@ public class MockDataCreation {
         try {
             dbConnection.connect();
 
-            String[] firstNames = {"Zaghlool", "Jihaad", "Hijau", "Daniel", "Kaarim", "Mushtaaq", "Baheej", "Faai", "Intan", "Melati", "Kiambang", "Tuah", "Tam", "Som", "Lai", "Ratnasari", "Joyo", "Kesuma", "Wira", "Darma", "Wati", "Abdul", "Abdullah", "Ahmad", "Aimi", "Aishah", "Akma", "Abas", "Abdull", "Abiddin"};
-            String[] lastNames = {"Tan","Lim","Lee","Wong","Wan","Ng","bin Ismail","bin Abdullah","bin Ahmad","binti Ismail","binti Abdullah","binti Ahmad","Chong","Rahman","Chan","Ali","bin Ibrahim","binti Ibrahim","Ong","Chin","Nor","Noor","Yap","Che","Yusof","bin Othman","binti Othman","bin Mohamad","Isa","binti Mohamad","Aziz ","Yong ","Bakar ","Goh ","Low ","Liew ","bin Hassan ","bin Mohamed ","binti Hassan ","Leong ","Hamid ","Lai ","bin Zakaria"};
+            String[] firstNames = {"Zaghlool", "Jihaad", "Hijau", "Daniel", "Kaarim", "Mushtaaq", "Baheej", "Faai", "Intan", "Melati", "Kiambang", "Tuah", "Tam", "Som", "Lai"
+                                    , "Ratnasari", "Joyo", "Kesuma", "Wira", "Darma", "Wati", "Abdul", "Abdullah", "Ahmad", "Aimi", "Aishah", "Akma", "Abas", "Abdull", "Abiddin"};
+
+            String[] lastNames = {"Tan","Lim","Lee","Wong","Wan","Ng","bin Ismail","bin Abdullah","bin Ahmad","binti Ismail","binti Abdullah","binti Ahmad","Chong","Rahman"
+                                    , "Chan","Ali","bin Ibrahim","binti Ibrahim","Ong","Chin","Nor","Noor","Yap","Che","Yusof","bin Othman","binti Othman","bin Mohamad","Isa"
+                                        ,"binti Mohamad","Aziz ","Yong ","Bakar ","Goh ","Low ","Liew ","bin Hassan ","bin Mohamed ","binti Hassan ","Leong ","Hamid ","Lai ","bin Zakaria"};
+
+
             String[] states = {"Johor", "Kedah", "Kelantan", "Melaka (Malacca)", "Negeri Sembilan", "Pahang", "Perak", "Perlis", "Pulau Pinang (Penang)", "Sabah", "Sarawak", "Selangor", "Terengganu"};
+
 
             String[][] userData = generateRandomUserData(rowCount, firstNames, lastNames);
             fillUserTable(userData);
@@ -40,7 +47,7 @@ public class MockDataCreation {
         for (int i = 0; i < rowCount; i++) {
             String username = "User" + (i + 1);
             String email = "user" + (i + 1) + "@example.com";
-            String phoneNumber = "123456789" + random.nextInt(10);
+            String phoneNumber = "011" + random.nextInt(9999999);
             String password = generateRandomPassword();
             String birthday = generateRandomBirthday();
 
@@ -90,21 +97,28 @@ public class MockDataCreation {
 
     public void fillUserInfoTable(String[][] userData, String[] firstNames, String[] lastNames, String[] states) throws SQLException {
         Random random = new Random();
+        String[] Hobbies = {"Art", "Cooking", "Dance", "Eating", "Listening to music", "Reading", "Sleeping", "Singing", "Watching films", "Other"};
+        String[] Jobs = {"Accountant", "Actor", "Actuary", "Architect", "Artist", "Astronomer", "Attorney", "Author", "Baker", "Barber", "Bartender", "Biologist", "Bookkeeper", "Builder", "Butcher", "Carpenter", "Cashier", "Chef", "Chemist", "Coach", "Dentist", "Designer", "Detective", "Dietitian", "Doctor", "Driver",
+                    "Economist", "Editor", "Electrician", "Engineer", "Farmer", "Firefighter", "Fisherman", "Florist", "Gardener", "Geologist", "Hairdresser", "Historian", "Interpreter", "Janitor", "Journalist", "Judge", "Lawyer", "Librarian", "Lifeguard", "Linguist", "Manager", "Mechanic", "Model", "Musician", "Nurse",
+                    "Optician", "Painter", "Pharmacist", "Photographer", "Physician", "Pilot", "Plumber", "Police officer", "Politician", "Programmer", "Psychologist", "Scientist", "Secretary", "Singer", "Soldier", "Statistician", "Surgeon", "Tailor", "Teacher", "Technician", "Translator", "Waiter", "Writer"};
 
+        String[] Countries = {"Malaysia", "Singapore", "Indonesia", "Thailand", "Vietnam", "Myanmar", "Cambodia", "Laos", "Philippines", "Brunei"};
         for (String[] user : userData) {
             int age = 18 + random.nextInt(50);
             String address = generateRandomAddress(states, random);
             String gender = random.nextBoolean() ? "Male" : "Female";
-            String countryOfOrigin = "Country" + random.nextInt(10);
-            String hobbies = "Hobbies" + random.nextInt(5);
-            String jobs = "Job" + random.nextInt(5);
+            String countryOfOrigin = Countries[random.nextInt(Countries.length)];
+            String hobbies = Hobbies[random.nextInt(Hobbies.length)];
+            String jobs = Jobs[random.nextInt(Jobs.length)];
             String birthday = user[4];
-
             String firstName = firstNames[random.nextInt(firstNames.length)];
             String lastName = lastNames[random.nextInt(lastNames.length)];
             String name = firstName + " " + lastName;
 
-            dbConnection.addUserInfo(name, birthday, age, address, gender, countryOfOrigin, hobbies, jobs);
+            String [] MaritalStatusList = {"Single","Married","Divorced","Widowed"};
+            String maritalStatus = MaritalStatusList[random.nextInt(MaritalStatusList.length)];
+
+            dbConnection.addUserInfo(name, birthday, age, address, gender, countryOfOrigin, hobbies, jobs, maritalStatus);
         }
     }
 
@@ -113,7 +127,7 @@ public class MockDataCreation {
         int zipCode = 10000 + random.nextInt(90000);
         String randomString = generateRandomString(15);
 
-        return state + " " + zipCode + " Jalan " + randomString;
+        return state + " " + zipCode + " Jalan " +" "+ randomString;
     }
 
     public String generateRandomString(int length) {
