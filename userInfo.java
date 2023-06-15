@@ -1,26 +1,29 @@
-package application;
+package org.example;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Stack;
 
 public class userInfo implements Serializable {
     private String name;
     private String address;
     private String gender;
-    private ArrayList<String> hobbies;
-    private ArrayList<String> jobs;
+    private static ArrayList<String> hobbies;
+    private Stack<String> jobs;
     private String relationshipStatus;
     private String school;
     private int numOfFriends;
 
+    Scanner sc = new Scanner(System.in);
     public userInfo() {
-    	this.hobbies = new ArrayList<String>();
-    	numOfFriends = 0;
-    	name = "";
-    	gender = "";
-    	this.jobs = new ArrayList<String>();
+        this.hobbies = new ArrayList<String>();
+        numOfFriends = 0;
+        name = "";
+        gender = "";
+        this.jobs = new Stack<>();
     }
 
     //getter and setter
@@ -33,7 +36,11 @@ public class userInfo implements Serializable {
     }
 
     public String getAddress() {
-        return address;
+        boolean privacy = sc.nextBoolean();
+        if(privacy)
+            return address;
+        else
+            return null;
     }
 
     public void setAddress(String address) {
@@ -48,62 +55,133 @@ public class userInfo implements Serializable {
         this.gender = gender;
     }
 
+
     public ArrayList<String> getHobbies() {
-        return hobbies;
+        boolean privacy = sc.nextBoolean();
+        if(privacy)
+            return hobbies;
+        else
+            return null;
     }
 
-    public void setHobbies(String[] hobbies) {
-    	if(this.hobbies != null) {
-    	this.hobbies.clear(); }
-    	
-    	for (String content : hobbies) {
-    		this.hobbies.add(content);
-    	}
+
+
+    /**
+     * Set the hobbies in multiple choice
+     * @param hobbies
+     */
+    public void setHobbies(ArrayList<Integer> hobbies,ArrayList<String> otherHobbies) {
+        if(this.hobbies != null) {
+            this.hobbies.clear(); }
+
+        for (int i = 0; i < hobbies.size(); i++) {
+            addHobbies(hobbies.get(i));
+        }
+
+        for (int i = 0; i < otherHobbies.size(); i++) {
+            this.hobbies.add(otherHobbies.get(i));
+        }
     }
 
-    public ArrayList<String> getJobs() {
-        return jobs;
+    public void addHobbies(Integer num){
+        switch(num){
+            case 1:
+                this.hobbies.add("Art");
+                break;
+            case 2:
+                this.hobbies.add("Cooking");
+                break;
+            case 3:
+                this.hobbies.add("Dance");
+                break;
+            case 4:
+                this.hobbies.add("Eating");
+                break;
+            case 5:
+                this.hobbies.add("Listening to music");
+                break;
+            case 6:
+                this.hobbies.add("Reading");
+                break;
+            case 7:
+                this.hobbies.add("Sleeping");
+                break;
+            case 8:
+                this.hobbies.add("Singing");
+                break;
+            case 9:
+                this.hobbies.add("Watching films");
+                break;
+            default:
+        }
+    }
+
+    public Stack<String> getJobs() {
+        boolean privacy = sc.nextBoolean();
+        if(privacy)
+            return jobs;
+        else
+            return null;
     }
 
     public void setJobs(String[] jobs) {
-    	if(this.jobs != null) {
-        	this.jobs.clear(); }
-        	
-        	for (String content : jobs) {
-        		this.jobs.add(content);
-        	}
+        for (String content : jobs) {
+            this.jobs.push(content);
+        }
     }
-    
+
     public void updateFriends(int i) {
-    	this.numOfFriends = i;
+        this.numOfFriends = i;
     }
-    
+
     public int getNumOfFriends() {
-    	return numOfFriends;
+        return numOfFriends;
     }
-    
+
     public void setSchool(String school) {
-    	this.school = school;
+        this.school = school;
     }
-    
+
     public String getSchool() {
-    	return school;
+        boolean privacy = sc.nextBoolean();
+        if(privacy)
+            return school;
+        else
+            return null;
     }
-    
+
     public void setRelationshipStatus(String status) {
-    	this.relationshipStatus = status;
+        this.relationshipStatus = status;
     }
-    
+
     public String getRelationshipStatus() {
-    	return relationshipStatus;
+        return relationshipStatus;
     }
-    
+
     public String printArraylist(ArrayList<String> arraytoPrint) {
-    	String full_content = "";
-    	for (String content: arraytoPrint) {
-    		full_content += content + " ";
-    	}
-    	return full_content;
+        String full_content = "";
+        for (String content: arraytoPrint) {
+            full_content += content + " ";
+        }
+        return full_content;
     }
-    
+
+    public String printStack(Stack<String> stacktoPrint){
+        String full_content = "";
+        for(String content : stacktoPrint)
+            full_content += content + " ";
+        return full_content;
+    }
+
+
+    public static void main(String[] args) {
+        User user = new User();
+        user.setInfo();
+        System.out.print("Hobbies: ");
+        for (int i = 0; i < hobbies.size(); i++) {
+            System.out.print(hobbies.get(i)+", ");
+        }
+        System.out.println();
+    }
+
 }

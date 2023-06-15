@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class User<T> implements Serializable {
+    Scanner sc = new Scanner(System.in);
     private String username;
     private String password;
 
@@ -28,6 +29,8 @@ public class User<T> implements Serializable {
      Admin admin;
     private byte[] salt;
     private byte[] hash;
+    private String hometown;
+    private String description;
 
     public User(String username, String password, String email, String phoneNumber, LocalDate birthdayDate, int id)  {
         this.username = username;
@@ -49,13 +52,46 @@ public class User<T> implements Serializable {
         }
     }
 
-    public User(){}
+    public User(){
+        info = new userInfo();
+    }
 
     // Getters and setters for username, password, email, and phoneNumber
     public String getUsername() {
         return username;
     }
 
+    public Stack<String> getOccupation(){
+        return info.getJobs();
+    }
+
+    public String getEducation(){
+        return info.getSchool();
+    }
+
+    public String getHometown(){
+        boolean privacy = sc.nextBoolean();
+        if(privacy)
+            return hometown;
+        else
+            return null;
+    }
+
+    public String getDescription() {
+        boolean privacy = sc.nextBoolean();
+        if(privacy)
+            return description;
+        else
+            return null;
+    }
+
+    public String getCurrentLives(){
+        return info.getAddress();
+    }
+
+    public ArrayList<String> getHobbies(){
+        return info.getHobbies();
+    }
     public int getId() {
         return id;
     }
@@ -113,6 +149,8 @@ public class User<T> implements Serializable {
         return hash;
     }
 
+
+
     public void displayInfo() {
         System.out.println("Username: " + this.username);
         System.out.println("Name: " + info.getName());
@@ -120,7 +158,7 @@ public class User<T> implements Serializable {
         System.out.println("Birthday: " + this.getBirthday());
         System.out.println("Age: " + this.getAge());
         System.out.println("Gender: " + info.getGender());
-        System.out.println("Job(s): " + info.printArraylist(info.getJobs()));
+        System.out.println("Job(s): " + info.printStack(info.getJobs()));
         System.out.println("Hobbies: " + info.printArraylist(info.getHobbies()));
     }
 
@@ -131,7 +169,7 @@ public class User<T> implements Serializable {
         System.out.println("Birthday: " + this.getBirthday());
         System.out.println("Age: " + this.getAge());
         System.out.println("Gender: " + info.getGender());
-        System.out.println("Job(s): " + info.printArraylist(info.getJobs()));
+        System.out.println("Job(s): " + info.printStack(info.getJobs()));
         System.out.println("Hobbies: " + info.printArraylist(info.getHobbies()));
         System.out.println("Mutual friend(s): " + friends.findMutualFriend(userGraph,currentUser).size());
         System.out.print("List of Mutual Friends: ");
@@ -164,6 +202,7 @@ public class User<T> implements Serializable {
             info.setAddress(address);
         }
 
+
         System.out.print("School: ");
         String School = sc.nextLine();
         if (!School.isBlank()) {
@@ -183,12 +222,25 @@ public class User<T> implements Serializable {
             info.setJobs(job);
         }
 
-        System.out.print("Hobbies (separate with ,): ");
-        String hobbies = sc.nextLine();
-        if (!hobbies.isBlank()) {
-            String[] hob = hobbies.split(",");
-            info.setHobbies(hob);
+        System.out.print("Hobbies (Please tick your hobby/hobbies: ");
+        ArrayList<Integer> Numhobbies= new ArrayList<>();
+        ArrayList<String> otherHobbies = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            boolean hobbies = sc.nextBoolean(); //true if tick orelse false
+            if(hobbies && i == 5){  //when the user tick other
+                System.out.println("Please separate your hobbies with comma");
+                sc.nextLine();
+                String otherHob = sc.nextLine();
+                String[] hob = otherHob.split(",");
+                for (String addHob : hob) {
+                    otherHobbies.add(addHob);
+                }
+            }
+            else if(hobbies){
+                Numhobbies.add(i+1);
+            }
         }
+        info.setHobbies(Numhobbies,otherHobbies);
 
 
     }
@@ -228,7 +280,7 @@ public class User<T> implements Serializable {
         }
     }
 
-    public void seePending() {
+    public void seePending(Friend friendGraph) {
         Scanner scanner = new Scanner(System.in);
         for (User user: friends.getPending()) {
             System.out.println(user.getUsername());
@@ -242,7 +294,7 @@ public class User<T> implements Serializable {
             int action = scanner.nextInt();
             switch (action) {
                 case 1:
-                    acceptFriend(friends.getPending().get(toInteract));
+                    acceptFriend(this, friends.getPending().get(toInteract), friendGraph);
                     break;
                 case 2:
                     declineFriend(friends.getPending().get(toInteract));
@@ -255,9 +307,9 @@ public class User<T> implements Serializable {
     }
 
 
-    public void acceptFriend(User user) {
-        friends.acceptFriend(user);
-        user.friends.acceptFriend(this);
+    public void acceptFriend(User owner, User user,Friend friendGraph) {
+        friends.acceptFriend(owner, user, friendGraph);
+        user.friends.acceptFriend(this, user, friendGraph);
         updateFriend();
         user.updateFriend();
     }

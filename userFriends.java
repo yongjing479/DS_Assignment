@@ -11,14 +11,13 @@ import java.util.Iterator;
 public class userFriends implements Serializable{
     private ArrayList<User> friends;
     private ArrayList<User> pending;
-    private ArrayList<User> blocked;
 
     private ArrayList<User> mutualFriends;
 
     public userFriends() {
         friends = new ArrayList<User>();
         pending = new ArrayList<User>();
-        blocked = new ArrayList<User>();
+//        blocked = new ArrayList<User>();
         mutualFriends = new ArrayList<>();
     }
 
@@ -62,10 +61,17 @@ public class userFriends implements Serializable{
         pending.add(user);
     }
 
-    public void acceptFriend(User user) {
+    /**
+     * When accept friend, the request will be removed from the pending list and the connection will be added in the friend graph
+     * @param owner(self)
+     * @param user
+     * @param friendGraph
+     */
+    public void acceptFriend(User owner, User user, Friend friendGraph) {
         if	(checkifPending(user)) {
             pending.remove(user);
-            friends.add(user);
+            friendGraph.addFriend(owner, user);
+
         }
     }
 
@@ -181,44 +187,59 @@ public class userFriends implements Serializable{
         return false;
     }
 
+    /**
+     * Receive friend request from other user to add as friend
+     * @param owner(self): User, other: User, friendGraph: Friend
+     * @return true when friend request set in pending list successfully
+     */
+    public boolean receiveFriendRequest(User owner, User other, Friend friendGraph){
+        if(friendGraph == null) return false;
+        if(!friendGraph.hasVertex(other)) return false;
+        if(!owner.getFriends().getPending().contains(other)){
+            owner.getFriends().setPending(owner,other);
+            return true;
+        }
+        return false;
+    }
 
 
 
-//    public static void main(String[] args) {
-//        userFriends ff = new userFriends();
-//        Friend fr = new Friend<>();
-//        LocalDate x = LocalDate.ofEpochDay(22/03/102);
-//        User a = new User<>("a","a","a","a",x,1);
-//        User b = new User<>("ab","ab","ab","ab",x,12);
-//        User c = new User<>("ac","ac","ac","ac",x,13);
-//        User d = new User<>("ad","ad","ad","ad",x,14);
-//        User e = new User<>("ae","ae","ae","ae",x,15);
-//        User f = new User<>("af","af","af","af",x,16);
-//        User g = new User<>("afg","afg","afg","afg",x,167);
-//        fr.addVertex(a);
-//        fr.addVertex(b);
-//        fr.addVertex(c);
-//        fr.addVertex(d);
-//        fr.addVertex(e);
-//        fr.addVertex(f);
-//        fr.addFriend(a,c);
-//        fr.addFriend(a,d);
-//        fr.addFriend(a,e);
-//        ff.friends.add(c);
-//        ff.friends.add(d);
-//        ff.friends.add(e);
-//        System.out.println(ff.friends.get(0).getUsername());
-//        System.out.println(ff.friends.get(1).getUsername());
-//        System.out.println(ff.friends.get(2).getUsername());
-//
-//        fr.addFriend(b,c);
-//        fr.addFriend(b,e);
-//        fr.addFriend(b,f);
-//        fr.printEdges();
-//        System.out.println(ff.findMutualFriend(fr,c));
-//        for (User print : ff.mutualFriends) {
-//            System.out.println(print.getUsername());
-//        }
-//        System.out.println(ff.mutualFriends.size());
-//    }
+
+    public static void main(String[] args) {
+        userFriends ff = new userFriends();
+        Friend fr = new Friend<>();
+        LocalDate x = LocalDate.ofEpochDay(22/03/102);
+        User a = new User<>("a","a","a","a",x,1);
+        User b = new User<>("ab","ab","ab","ab",x,12);
+        User c = new User<>("ac","ac","ac","ac",x,13);
+        User d = new User<>("ad","ad","ad","ad",x,14);
+        User e = new User<>("ae","ae","ae","ae",x,15);
+        User f = new User<>("af","af","af","af",x,16);
+        User g = new User<>("afg","afg","afg","afg",x,167);
+        fr.addVertex(a);
+        fr.addVertex(b);
+        fr.addVertex(c);
+        fr.addVertex(d);
+        fr.addVertex(e);
+        fr.addVertex(f);
+        fr.addFriend(a,c);
+        fr.addFriend(a,d);
+        fr.addFriend(a,e);
+        ff.friends.add(c);
+        ff.friends.add(d);
+        ff.friends.add(e);
+        System.out.println(ff.friends.get(0).getUsername());
+        System.out.println(ff.friends.get(1).getUsername());
+        System.out.println(ff.friends.get(2).getUsername());
+
+        fr.addFriend(b,c);
+        fr.addFriend(b,e);
+        fr.addFriend(b,f);
+        fr.printEdges();
+        System.out.println(ff.findMutualFriend(fr,c));
+        for (User print : ff.mutualFriends) {
+            System.out.println(print.getUsername());
+        }
+        System.out.println(ff.mutualFriends.size());
+    }
 }
